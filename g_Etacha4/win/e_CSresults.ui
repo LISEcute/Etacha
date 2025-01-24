@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FormResults</class>
+ <widget class="QDialog" name="FormResults">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1005</width>
+    <height>404</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ETACHA cross sections</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="4,1">
+   <property name="spacing">
+    <number>12</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="3,5">
+     <property name="spacing">
+      <number>15</number>
+     </property>
+     <item>
+      <widget class="QGroupBox" name="gB_g">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(170, 255, 255);</string>
+       </property>
+       <property name="title">
+        <string>Capture and Ionization</string>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="spacing">
+         <number>9</number>
+        </property>
+        <property name="topMargin">
+         <number>12</number>
+        </property>
+        <item>
+         <widget class="QTableWidget" name="tableGlobal"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="gB_s">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(247, 255, 194);</string>
+       </property>
+       <property name="title">
+        <string>Excitation</string>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="spacing">
+         <number>9</number>
+        </property>
+        <property name="topMargin">
+         <number>12</number>
+        </property>
+        <item>
+         <widget class="QTableWidget" name="tableShell"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="5,2,2,2,1,1">
+      <property name="spacing">
+       <number>12</number>
+      </property>
+      <property name="leftMargin">
+       <number>9</number>
+      </property>
+      <property name="topMargin">
+       <number>9</number>
+      </property>
+      <property name="rightMargin">
+       <number>9</number>
+      </property>
+      <property name="bottomMargin">
+       <number>9</number>
+      </property>
+      <item>
+       <layout class="QGridLayout" name="gridLayout" columnstretch="3,1,1">
+        <item row="0" column="1">
+         <widget class="QLabel" name="Label1">
+          <property name="text">
+           <string>Ionization:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="Label_Ionization">
+          <property name="text">
+           <string>PWBA</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="LabelVersion">
+          <property name="font">
+           <font>
+            <family>MS Shell Dlg 2</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(15, 30, 165);</string>
+          </property>
+          <property name="text">
+           <string>Version</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="Label2">
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Excitation:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLabel" name="Label_Excitation">
+          <property name="text">
+           <string>PWBA</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1" colspan="2">
+         <widget class="QLabel" name="Label_Reaction">
+          <property name="text">
+           <string>Reaction</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Preferred</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pB_Results_Accept">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>  Accept</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../Icons/e_Icons.qrc">
+          <normaloff>:/etacha.ico</normaloff>:/etacha.ico</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pB_Cancel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>  Continue</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../Icons/e_Icons.qrc">
+          <normaloff>:/trans.png</normaloff>:/trans.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Preferred</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(110, 110, 160);</string>
+        </property>
+        <property name="text">
+         <string>&lt;font size=-1&gt;Table cells can&lt;br&gt; be editted.&lt;br&gt;&lt;br&gt;All cross sections&lt;br&gt; in 1e-20 cm&lt;sup&gt;2&lt;/sup&gt;&lt;/font&gt;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>tableGlobal</tabstop>
+  <tabstop>tableShell</tabstop>
+  <tabstop>pB_Results_Accept</tabstop>
+  <tabstop>pB_Cancel</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../Icons/e_Icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>

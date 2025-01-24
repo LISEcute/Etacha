@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>open.png</file>
+        <file>save.png</file>
+        <file>print.png</file>
+        <file>trans.png</file>
+        <file>lisepp_small.bmp</file>
+        <file>emblem_little_plus.png</file>
+        <file>trasp_icon.png</file>
+        <file>lise_blue.bmp</file>
+        <file>cancel.png</file>
+        <file>etacha.ico</file>
+        <file>etacha.png</file>
+        <file>cursor/finger.cur</file>
+    </qresource>
+</RCC>
