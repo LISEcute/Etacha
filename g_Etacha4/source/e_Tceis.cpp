@@ -826,7 +826,7 @@ L200:
 }
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-void chypser(complex<double> ca,
+/**void chypser(complex<double> ca,
              complex<double> cb,
              complex<double> cc,
              double x,
@@ -858,6 +858,49 @@ while(1)
         cbb=cbb+c1;
         ccc=ccc+c1;
         }
+}
+**/
+
+#include <complex>
+
+using namespace std;
+
+const double EPSILON = 1e-12; // Convergence threshold
+
+void chypser(complex<double> ca,
+             complex<double> cb,
+             complex<double> cc,
+             double x,
+             complex<double> &cf)
+{
+    if (ca == complex<double>(0.0) || cb == complex<double>(0.0)) {
+        cf = complex<double>(1.0);
+        return;
+    }
+
+    int n = 1;
+    complex<double> caa = ca, cbb = cb, ccc = cc;
+    complex<double> cfac = complex<double>(1.0);
+    complex<double> ctemp = cfac;
+
+    while (true) {
+        // Precompute the term before multiplication
+        complex<double> precomputed = (caa * cbb) / ccc;
+        cfac *= precomputed * (x / static_cast<double>(n));
+
+        // Update cf
+        cf = ctemp + cfac;
+
+        // Use absolute difference for floating-point comparison
+        if (abs(cf - ctemp) < EPSILON) break;
+
+        // Move to the next term
+        ctemp = cf;
+        ++n;
+        caa += complex<double>(1.0);
+        cbb += complex<double>(1.0);
+        ccc += complex<double>(1.0);
+    }
 }
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
