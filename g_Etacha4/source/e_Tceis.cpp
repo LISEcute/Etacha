@@ -1,3 +1,4 @@
+#include "QtCore/qelapsedtimer.h"
 #include "e_Etacha4.h"
 #include <complex>
 using namespace std;
@@ -826,7 +827,7 @@ L200:
 }
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-/**void chypser(complex<double> ca,
+void chypser(complex<double> ca,
              complex<double> cb,
              complex<double> cc,
              double x,
@@ -859,8 +860,8 @@ while(1)
         ccc=ccc+c1;
         }
 }
-**/
 
+ /*-----------OPTIMIZED CODE BELOW----------------------------------------------------------
 #include <complex>
 
 using namespace std;
@@ -902,6 +903,7 @@ void chypser(complex<double> ca,
         ccc += complex<double>(1.0);
     }
 }
+*/
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
@@ -1083,6 +1085,44 @@ complex<double> cdiser;
 
 return cdiser;
 }
+/*
+ * -----------OPTIMIZED CODE----------------------------------------------------------
+complex<double> diser(complex<double> z)
+{
+    complex<double> cdiser;
+    const double xz = z.real();
+    const double yz = z.imag();
+    const int nz = static_cast<int>(xz);
+
+    // If xz is zero or an integer, handle specially.
+    if (xz == 0.0 || xz == static_cast<double>(nz)) {
+        if (yz == 0.0) {
+            // Use asymptotic expansion for large nz to compute the digamma function,
+            // psi(nz) ≈ log(nz) - 1/(2*nz) - 1/(12*nz^2) + 1/(120*nz^4)
+            if (nz > 50) {
+                double n = static_cast<double>(nz);
+                cdiser = std::log(n)
+                         - 1.0/(2*n)
+                         - 1.0/(12*n*n)
+                         + 1.0/(120*(n*n*n*n));
+            } else {
+                // For small nz, compute directly: psi(nz) = -gama + ∑(k=1)^(nz-1) 1/k.
+                cdiser = -gama;
+                for (int k = 1; k <= nz - 1; k++) {
+                    cdiser += 1.0/k;
+                }
+            }
+        }
+        else {
+            digi1(nz, xz, yz, cdiser);
+        }
+    }
+    else {
+        digi2(z, cdiser);
+    }
+    return cdiser;
+}
+*/
 
 /*
  * The function ∑k=1N1k∑k=1N​k1​ is the NN-th harmonic number, denoted by HNHN​. An asymptotic approximation for HNHN​ as N→∞N→∞ is:
@@ -1229,6 +1269,44 @@ complex<double> canswer=ctmp+log(stp*cser/cx);
 
 return canswer;
 }
+
+/*
+ * -----------OPTIMIZED CODE----------------------------------------------------------
+#include <complex>
+#include <array>
+#include <cmath>
+
+using namespace std;
+
+constexpr array<double, 7> rcof = {0,
+                                   76.18009172947146, -86.50532032941677,
+                                   24.01409824083091, -1.231739572450155,
+                                   0.1208650973866179e-2, -0.5395239384953e-5};
+
+constexpr double stp = 2.5066282746310005;
+
+complex<double> cGamLn(complex<double> cz)
+{
+    if (cz.real() <= 0.) return complex<double>(0, 0); // Handle invalid input
+
+    complex<double> cx = cz;
+    complex<double> cy = cx;
+    complex<double> ctmp = (cx + 5.5);
+    complex<double> cser(1.000000000190015, 0);
+
+    ctmp = (cx + 0.5) * log(ctmp) - ctmp;
+
+    // Reverting to direct division for speed
+    for (int j = 1; j <= 6; ++j)
+    {
+        cy += 1.0;
+        cser += rcof[j] / cy;  // Direct division (faster on modern CPUs)
+    }
+
+    return ctmp + log(stp * cser / cx);
+}
+*/
+
 /*
 c**********************************************************************
 *
