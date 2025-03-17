@@ -1331,6 +1331,43 @@ static int counter=0;
 counter++;
 
 }
+//--------------------OPTIMIZED CODE-----------------------------------------------------------------------------
+/*
+void CalcOlegSum(double *V) {
+    static int counter = 0;
+
+    constexpr int ranges[7][2] = {
+        {1, 63},    // sumM[0]
+        {64, 66},   // sumM[1]
+        {67, 73},   // sumM[2]
+        {74, 84},   // sumM[3]
+        {85, 293},  // sumM[4]
+        {294, 326}, // sumM[5]
+        {327, 1283} // sumM[6]
+    };
+
+    double localSum[7] = {0};  // Temporary storage to avoid modifying sumM in each iteration
+
+    for (int i = 1; i <= 1283; ++i) {
+        if (i <= ranges[0][1])       localSum[0] += V[i];
+        else if (i <= ranges[1][1])  localSum[1] += V[i];
+        else if (i <= ranges[2][1])  localSum[2] += V[i];
+        else if (i <= ranges[3][1])  localSum[3] += V[i];
+        else if (i <= ranges[4][1])  localSum[4] += V[i];
+        else if (i <= ranges[5][1])  localSum[5] += V[i];
+        else                         localSum[6] += V[i];
+    }
+
+    // Store results in sumM
+    for (int i = 0; i < 7; i++) sumM[i] = localSum[i];
+
+    // Compute sumM[7] efficiently
+    sumM[7] = -1.0 * localSum[4]; // Subtract sumM[4] from the total
+    for (int i = 0; i < 7; i++) if (i != 4) sumM[7] += localSum[i];
+
+    counter++;
+}
+*/
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
