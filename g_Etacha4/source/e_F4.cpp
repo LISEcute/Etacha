@@ -631,11 +631,20 @@ int num=NUM1[NCO+1];
 return num;
 }
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
 int f_numP(int NCO)
 {
 int numP=NUM2[NCO+1];
 return numP;
 }
+//------------------------OPTIMISED CODE------------------------------------------------------------------------------
+
+/*
+int f_numP(int NCO)
+{
+    return NUM2[NCO+1];
+}
+*/
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 int f_II(int num)
 {
@@ -649,11 +658,18 @@ int f_JJ=(ICO1[num]-I*100)/10;
 return f_JJ;
 }
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
 int f_KK(int I,int J,int num)
 {
 int KK=(ICO1[num]-I*100-J*10);
 return KK;
 }
+/*
+int f_KK(int I,int J,int num)
+{
+    return (ICO1[num]-I*100-J*10);
+}
+*/
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 int f_IM(int num)
 {
@@ -668,11 +684,18 @@ return IKL;
 }
 
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
 int f_numPP(int NCO)
 {
 int numPP=NUM3[NCO+1];
 return numPP;
 }
+//------------------------OPTIMISED CODE------------------------------------------------------------------------------
+/*
+int f_numPP(int NCO) {
+    return NUM3[NCO + 1];
+}
+*/
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 int f_IN(int num)
 {
