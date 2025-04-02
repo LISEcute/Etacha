@@ -697,14 +697,30 @@ int f_numPP(int NCO) {
 }
 */
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
 int f_IN(int num)
 {
 int f_IN=ICO3[num]/100;
 return f_IN;
 }
+
+//------------------------OPTIMISED CODE------------------------------------------------------------------------------
+/*
+int f_IN(int num) {
+    return ICO3[num] / 100;
+}
+*/
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
 int f_IKM(int N, int num)
 {
 int f_IKM=ICO3[num]-N*100;
 return f_IKM;
 }
+
+//------------------------OPTIMISED CODE------------------------------------------------------------------------------
+/*
+int f_IKM(int N, int num) {
+    return ICO3[num] % 100;
+}
+*/
