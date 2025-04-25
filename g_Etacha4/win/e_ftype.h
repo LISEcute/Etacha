@@ -1,5 +1,5 @@
-#define ETACHAG_version "Version 4.4.18"
-#define ETACHAG_date    "01-JUL-2023"
+#define ETACHAG_version "Version 4.5.0"
+#define ETACHAG_date    "04-APR-2025"
 
 
 // 4.L 2.122   23-JUN-2016     correction for IonCS  v.23 & 3
@@ -61,3 +61,5 @@
 // 4.4.16       10/16/22       Evolution plot full completion
 // 4.4.17       03/18/23       More digits for sum in the Shell window
 // 4.4.18       07/01/23       modificications, compiled with MSVC
+
+// 4.5.0        04/25/25       Arjus's optimization

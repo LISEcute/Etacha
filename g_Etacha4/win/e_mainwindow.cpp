@@ -323,7 +323,9 @@ void MainWindow::SetPage(bool fromFile)
   QString firstPage =
       "<center><font color=\"blue\"><br><br>This version of ETACHA is for ions with up to 60 electrons </font><BR><br>"
 "<i><b>Ready to modify input parameters and run</b></i></center>";
-  statusBar()->showMessage("Welcome to ETACHA");
+  QString welc = "Welcome to ETACHA (";
+  welc += QString(ETACHAG_version) + " from " + QString(ETACHAG_date) + ")";
+  statusBar()->showMessage(welc);
 
   ui->text_Main->setHtml(firstPage);
 
