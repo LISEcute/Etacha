@@ -1,4 +1,4 @@
-#include "QtCore/qelapsedtimer.h"
+//#include "QtCore/qelapsedtimer.h"
 #include "e_Etacha4.h"
 #include <complex>
 using namespace std;
@@ -7,9 +7,16 @@ using namespace std;
 #include <stdio.h>
 #include "../win/e_myextern.h"
 #include "../win/e_Constant.h"
-//#include "e_myextern.h"
 #include "e_GaussDataBlock.h"
+#include <array>
+#include <cmath>
+#include <QDebug>
+
+
+
 #define gama 0.577215664901532860606512
+
+
 
 //#include <vcl.h>
 
@@ -42,7 +49,6 @@ void hypcei(complex<double> ca, complex<double> cb, complex<double> cc, double x
 void hypere (complex<double> ca, complex<double> cb, complex<double> cc, double x, complex<double> &cf);
 complex<double> LogGammaFunc(complex<double> cz);
 complex<double> cGamLn(complex<double> cz);
-complex<double> diser (complex<double> z);
 
 void ca1536 (complex<double> ca,complex<double> cb, complex<double> cc, double x, complex<double> &cf);
 void ca1537 (complex<double> ca,complex<double> cb, complex<double> cc, double x, complex<double> &cf);
@@ -52,6 +58,7 @@ void ca15313(complex<double> ca,                    complex<double> cc, double x
 
 void chypser(complex<double> ca,complex<double> cb, complex<double> cc, double x, complex<double> &cf);
 
+complex<double> diser (complex<double> z);
 void digi1(int nz, double xz, double yz, complex<double>&  diser);
 void digi2(complex<double> z,            complex<double>&  diser);
 void digam(complex<double> z,            complex<double>&  psi);
@@ -827,46 +834,42 @@ L200:
 }
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-void chypser(complex<double> ca,
-             complex<double> cb,
-             complex<double> cc,
-             double x,
-             complex<double> &cf)
-{
-//  Hypergeometric series calculated to machine accuracy
-complex<double> cfac,ctemp,caa,cbb,ccc;
-int n;
+// void chypser(complex<double> ca,
+//              complex<double> cb,
+//              complex<double> cc,
+//              double x,
+//              complex<double> &cf)
+// {
+// //  Hypergeometric series calculated to machine accuracy
+// complex<double> cfac,ctemp,caa,cbb,ccc;
+// int n;
 
-       if(ca == c0 || cb == c0) {  cf=c1;  return; }
+//        if(ca == c0 || cb == c0) {  cf=c1;  return; }
 
-      n=1;
-      caa=ca;
-      cbb=cb;
-      ccc=cc;
-      cfac=c1;
-      ctemp=cfac;
+//       n=1;
+//       caa=ca;
+//       cbb=cb;
+//       ccc=cc;
+//       cfac=c1;
+//       ctemp=cfac;
 
-while(1)
-        {
-        cfac=((caa*cbb)/ccc)*cfac;
-        cfac=cfac*x/double(n);
-        cf=ctemp+cfac;
-        if(cf == ctemp) break;
+// while(1)
+//         {
+//         cfac=((caa*cbb)/ccc)*cfac;
+//         cfac=cfac*x/double(n);
+//         cf=ctemp+cfac;
+//         if(cf == ctemp) break;
 
-        ctemp=cf;
-        n=n+1;
-        caa=caa+c1;
-        cbb=cbb+c1;
-        ccc=ccc+c1;
-        }
-}
-
- /*-----------OPTIMIZED CODE BELOW----------------------------------------------------------
-#include <complex>
-
-using namespace std;
-
-const double EPSILON = 1e-12; // Convergence threshold
+//         ctemp=cf;
+//         n=n+1;
+//         caa=caa+c1;
+//         cbb=cbb+c1;
+//         ccc=ccc+c1;
+//         }
+// }
+//WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+ //-----------OPTIMIZED CODE BELOW  Arjun----Arj01------------------------------------------------------
+// with EPSILON implementation
 
 void chypser(complex<double> ca,
              complex<double> cb,
@@ -874,11 +877,22 @@ void chypser(complex<double> ca,
              double x,
              complex<double> &cf)
 {
+
     if (ca == complex<double>(0.0) || cb == complex<double>(0.0)) {
         cf = complex<double>(1.0);
         return;
     }
 
+    const double EPSILON = 1e-6; // Convergence threshold
+    // 1e-2          differ results
+    // 1e-5   averN 2.72
+    // 1e-8         4.32
+    // 1e-12        6.57
+    // 1e-18        9.96
+
+
+//    static int sumN = 0;
+//    static int counter = 1;
     int n = 1;
     complex<double> caa = ca, cbb = cb, ccc = cc;
     complex<double> cfac = complex<double>(1.0);
@@ -902,8 +916,13 @@ void chypser(complex<double> ca,
         cbb += complex<double>(1.0);
         ccc += complex<double>(1.0);
     }
+
+
+     // sumN += n;
+     // counter++;
+     // qDebug() << (double)sumN/counter << counter;
 }
-*/
+
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
@@ -1056,37 +1075,38 @@ int main() {
  */
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-complex<double> diser(complex<double> z)
-{
-complex<double> cdiser;
+// complex<double> diser(complex<double> z)  // original
+// {
+// complex<double> cdiser;
 
-      double xz,yz,divx;
-      int nz;
+//       double xz,yz,divx;
+//       int nz;
 
-      xz=z.real();
-      yz=z.imag();
-      nz=xz;
+//       xz=z.real();
+//       yz=z.imag();
+//       nz=xz;
 
-       if(xz != 0.)  divx=nz/xz;
+//        if(xz != 0.)  divx=nz/xz;
 
-       if(xz == 0. || divx == 1.)
-                {
-                if(yz == 0.)
-                        {
-                        cdiser=-gama;
-                        for(int k=1; k<=nz-1; k++)
-                                        cdiser = cdiser+1./k;
-                        }
-                 else   {
-                        digi1(nz,xz,yz,cdiser);
-                        }
-                }
-        else digi2(z,cdiser);
+//        if(xz == 0. || divx == 1.)
+//                 {
+//                 if(yz == 0.)
+//                         {
+//                         cdiser=-gama;
+//                         for(int k=1; k<=nz-1; k++)
+//                                         cdiser = cdiser+1./k;
+//                         }
+//                  else   {
+//                         digi1(nz,xz,yz,cdiser);
+//                         }
+//                 }
+//         else digi2(z,cdiser);
 
-return cdiser;
-}
-/*
- * -----------OPTIMIZED CODE----------------------------------------------------------
+// return cdiser;
+// }
+
+//WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+ //* -----------OPTIMIZED CODE-------------------Arj02---------------------------------------
 complex<double> diser(complex<double> z)
 {
     complex<double> cdiser;
@@ -1095,8 +1115,10 @@ complex<double> diser(complex<double> z)
     const int nz = static_cast<int>(xz);
 
     // If xz is zero or an integer, handle specially.
-    if (xz == 0.0 || xz == static_cast<double>(nz)) {
-        if (yz == 0.0) {
+    if (xz == 0.0 || xz == static_cast<double>(nz))
+    {
+        if (yz == 0.0)
+        {
             // Use asymptotic expansion for large nz to compute the digamma function,
             // psi(nz) ≈ log(nz) - 1/(2*nz) - 1/(12*nz^2) + 1/(120*nz^4)
             if (nz > 50) {
@@ -1122,10 +1144,10 @@ complex<double> diser(complex<double> z)
     }
     return cdiser;
 }
-*/
+
 
 /*
- * The function ∑k=1N1k∑k=1N​k1​ is the NN-th harmonic number, denoted by HNHN​. An asymptotic approximation for HNHN​ as N→∞N→∞ is:
+ * The function sum k=1N1k sum k=1N​k1​ is the NN-th harmonic number, denoted by HNHN​. An asymptotic approximation for HNHN​ as N→∞N→∞ is:
 HN∼ln⁡(N)+γ+12N−112N2+O(1N4),
 HN​∼ln(N)+γ+2N1​−12N21​+O(N41​),
 
@@ -1241,53 +1263,50 @@ return canswer;
 }
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-complex<double>  cGamLn(complex<double> cz)
-{
-      double rcof[7] = {0,
-                        76.18009172947146e0,-86.50532032941677e0,
-                        24.01409824083091e0,-1.231739572450155e0,
-                        0.1208650973866179e-2,-0.5395239384953e-5};
+// complex<double>  cGamLn(complex<double> cz) // original
+// {
+//       double rcof[7] = {0,
+//                         76.18009172947146e0,-86.50532032941677e0,
+//                         24.01409824083091e0,-1.231739572450155e0,
+//                         0.1208650973866179e-2,-0.5395239384953e-5};
 
-      double stp=2.5066282746310005;
+//       double stp=2.5066282746310005;
 
-      if(cz.real() <= 0.) return c0; //// 'real[z] <= 0';
+//       if(cz.real() <= 0.) return c0; //// 'real[z] <= 0';
 
-      complex<double> cx(cz);
-      complex<double> cy(cx);
-      complex<double> ctmp(cx+5.5);
-      complex<double> cser(1.000000000190015,0);
+//       complex<double> cx(cz);
+//       complex<double> cy(cx);
+//       complex<double> ctmp(cx+5.5);
+//       complex<double> cser(1.000000000190015,0);
 
-      ctmp=(cx+0.5)*log(ctmp)-ctmp;
+//       ctmp=(cx+0.5)*log(ctmp)-ctmp;
 
-      for(int j=1; j<=6; j++)
-                {
-                cy   = cy+1.;
-                cser = cser+rcof[j]/cy;
-                }
+//       for(int j=1; j<=6; j++)
+//                 {
+//                 cy   = cy+1.;
+//                 cser = cser+rcof[j]/cy;
+//                 }
 
-complex<double> canswer=ctmp+log(stp*cser/cx);
+// complex<double> canswer=ctmp+log(stp*cser/cx);
 
-return canswer;
-}
+// return canswer;
+// }
 
-/*
- * -----------OPTIMIZED CODE----------------------------------------------------------
-#include <complex>
-#include <array>
-#include <cmath>
 
-using namespace std;
-
-constexpr array<double, 7> rcof = {0,
-                                   76.18009172947146, -86.50532032941677,
-                                   24.01409824083091, -1.231739572450155,
-                                   0.1208650973866179e-2, -0.5395239384953e-5};
-
-constexpr double stp = 2.5066282746310005;
+ // -----------OPTIMIZED CODE----------Arj03------------------------------------------------
 
 complex<double> cGamLn(complex<double> cz)
-{
+{   
     if (cz.real() <= 0.) return complex<double>(0, 0); // Handle invalid input
+
+    constexpr array<double, 7> rcof = {0,
+                                       76.18009172947146, -86.50532032941677,
+                                       24.01409824083091, -1.231739572450155,
+                                       0.1208650973866179e-2, -0.5395239384953e-5};
+
+    constexpr double stp = 2.5066282746310005;
+
+
 
     complex<double> cx = cz;
     complex<double> cy = cx;
@@ -1305,7 +1324,6 @@ complex<double> cGamLn(complex<double> cz)
 
     return ctmp + log(stp * cser / cx);
 }
-*/
 
 /*
 c**********************************************************************

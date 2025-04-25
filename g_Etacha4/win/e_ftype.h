@@ -65,4 +65,5 @@
 // 4.5.0        04/25/25       Arjus's optimization
 // 4.5.1        04/25/25       ETACHA site haas been changed in About dialog
 // 4.5.2        04/25/25       the status bar shows ETACHA version at Wecome
+// 4.5.3        04/25/25       Ar0j1, Arj2
 

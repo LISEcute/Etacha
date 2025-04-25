@@ -13,10 +13,10 @@
 #include "e_Declare.h"
 #include "e_AtomicShell.h"
 #include "w_Stuff/liseStrcpyOS.h"
-/*
+
 //----------------------------------------------  utils
-extern double Velocity_au(double E);
-extern double E_to_Beta(double E);*/
+// extern double Velocity_au(double E);
+// extern double E_to_Beta(double E);
 extern double pow2(double par);
 extern double pow2I(double par);
 extern QString ElapsedTime(qint64 msec);
