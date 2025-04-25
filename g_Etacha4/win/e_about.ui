@@ -77,7 +77,6 @@
         <font>
          <family>Bookman Old Style</family>
          <pointsize>24</pointsize>
-         <weight>75</weight>
          <italic>false</italic>
          <bold>true</bold>
         </font>
@@ -148,7 +147,6 @@ margin-bottom:0;</string>
       <font>
        <family>Bookman Old Style</family>
        <pointsize>13</pointsize>
-       <weight>75</weight>
        <italic>false</italic>
        <bold>true</bold>
       </font>
@@ -198,7 +196,6 @@ margin-bottom:0;</string>
       <font>
        <family>MS Shell Dlg 2</family>
        <pointsize>10</pointsize>
-       <weight>75</weight>
        <italic>false</italic>
        <bold>true</bold>
       </font>
@@ -220,7 +217,6 @@ margin-bottom:0;</string>
       <font>
        <family>MS Shell Dlg 2</family>
        <pointsize>10</pointsize>
-       <weight>75</weight>
        <italic>false</italic>
        <bold>true</bold>
       </font>
@@ -304,7 +300,7 @@ color: rgb(210, 210, 210);</string>
          <string notr="true">color: rgb(222, 226, 197);</string>
         </property>
         <property name="text">
-         <string>www.insp.jussieu.fr/ETACHA4-a-code-to-predict-the.html</string>
+         <string>https://lise.frib.msu.edu/etacha.html</string>
         </property>
         <property name="textFormat">
          <enum>Qt::AutoText</enum>
@@ -319,7 +315,6 @@ color: rgb(210, 210, 210);</string>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
-          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -336,7 +331,6 @@ color: rgb(210, 210, 210);</string>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
-          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -366,7 +360,7 @@ color: rgb(210, 210, 210);</string>
          <string notr="true">color: rgb(222, 226, 197);</string>
         </property>
         <property name="text">
-         <string>http://lise.nscl.msu.edu</string>
+         <string>https://lise.frib.msu.edu</string>
         </property>
         <property name="textFormat">
          <enum>Qt::AutoText</enum>

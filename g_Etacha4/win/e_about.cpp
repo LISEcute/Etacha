@@ -39,7 +39,7 @@ void About::cmSite() {    QDesktopServices::openUrl(QUrl(ui->label_LISE->text())
 
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 void About::cmLink()
-{   QString link = "http://www.insp.upmc.fr/ETACHA-a-code-to-predict-the.html?lang=fr";
+{   QString link = "https://lise.frib.msu.edu/etacha.html";
     QDesktopServices::openUrl(QUrl(link));}
 
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW

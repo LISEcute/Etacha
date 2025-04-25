@@ -1,4 +1,4 @@
-#define ETACHAG_version "Version 4.5.0"
+#define ETACHAG_version "Version 4.5.2"
 #define ETACHAG_date    "04-APR-2025"
 
 
@@ -63,3 +63,6 @@
 // 4.4.18       07/01/23       modificications, compiled with MSVC
 
 // 4.5.0        04/25/25       Arjus's optimization
+// 4.5.1        04/25/25       ETACHA site haas been changed in About dialog
+// 4.5.2        04/25/25       the status bar shows ETACHA version at Wecome
+
