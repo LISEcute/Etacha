@@ -3,17 +3,14 @@
 #include <cmath>
 #include <stdexcept>
 #include <vector>
-extern int ODEsteps;
-#ifdef _OPENMP
-#  include <omp.h>
-#endif
 
+extern int ODEsteps;
 extern void F(double t, double *y, double *yp);
 
 // Tuning constants:
-static constexpr double SAFETY  = 0.3;   // step‐size safety factor
-static constexpr double FAC_MIN = 0.1;   // minimum shrink factor
-static constexpr double FAC_MAX = 1.0;   // maximum grow factor
+static constexpr double SAFETY  = 0.3;
+static constexpr double FAC_MIN = 0.1;
+static constexpr double FAC_MAX = 1.0;
 static constexpr int    MAX_STEPS = 500000;
 
 double integrate_euler(
@@ -41,40 +38,31 @@ double integrate_euler(
         }
         ODEsteps = stepCount;
 
-        // If the remaining distance is smaller than |h|, reduce h so we land on t1 exactly
         if (std::fabs(h) > std::fabs(t1 - t)) {
             h = t1 - t;
         }
+
         F(t, y, yp.data());
 
-#ifdef _OPENMP
-#  pragma omp simd
-#endif
+        // Tentative full-step Euler
         for (int i = 0; i < neqn; ++i) {
             yTent[i] = y[i] + h * yp[i];
         }
 
-        // 3) Half‐step Euler: yMid = y + (h/2)*yp
+        // Midpoint (half-step Euler)
         double h2 = 0.5 * h;
-#ifdef _OPENMP
-#  pragma omp simd
-#endif
         for (int i = 0; i < neqn; ++i) {
             yMid[i] = y[i] + h2 * yp[i];
         }
+
         F(t + h2, yMid.data(), yp.data());
 
-// 5) Advance that midpoint to “half‐step” final: yHalf = yMid + (h/2)*yp
-#ifdef _OPENMP
-#  pragma omp simd
-#endif
         for (int i = 0; i < neqn; ++i) {
             yHalf[i] = yMid[i] + h2 * yp[i];
         }
+
+        // Error estimation
         double errSum = 0.0;
-#ifdef _OPENMP
-#  pragma omp simd reduction(+:errSum)
-#endif
         for (int i = 0; i < neqn; ++i) {
             double sc = absTol + relTol * std::max(std::fabs(yTent[i]), std::fabs(yHalf[i]));
             double delta = yTent[i] - yHalf[i];
@@ -82,23 +70,21 @@ double integrate_euler(
         }
         double err = std::sqrt(errSum / static_cast<double>(neqn));
 
-        // 7) Accept or reject step
         if (err <= 1.0) {
-            // step accepted: commit yHalf → y, advance t
             for (int i = 0; i < neqn; ++i) {
                 y[i] = yHalf[i];
             }
             t += h;
         }
-        // 8) Adjust step size: fac = SAFETY * err^(–0.5), clamped to [FAC_MIN, FAC_MAX]
+
         double fac;
         if (err == 0.0) {
             fac = FAC_MAX;
         } else {
-            // better performance than std::pow(err, -0.5)
             fac = SAFETY * std::exp(-0.5 * std::log(err));
             fac = std::clamp(fac, FAC_MIN, FAC_MAX);
         }
+
         h *= fac;
     }
 
