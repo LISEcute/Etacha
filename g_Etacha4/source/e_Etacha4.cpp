@@ -490,7 +490,7 @@ L100:
                         //
 
 CalcOlegSum(Y);
-
+MSTATE=1;
 
 expectedT  = tout;
 if(DifEqModel==0) {
