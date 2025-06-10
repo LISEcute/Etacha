@@ -1602,6 +1602,20 @@ Calculations</string>
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QRadioButton" name="r8_bdf">
+             <property name="text">
+              <string>BDF Solver</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="rb_FI">
+             <property name="text">
+              <string>Gauss-Kronrod</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
@@ -1845,7 +1859,7 @@ cross sections</string>
      <x>0</x>
      <y>0</y>
      <width>1100</width>
-     <height>22</height>
+     <height>37</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -2018,7 +2032,6 @@ cross sections</string>
   <tabstop>rB_corEmpirical</tabstop>
   <tabstop>rB_corNo</tabstop>
   <tabstop>rB_corBinding</tabstop>
-  <tabstop>rb_ODE</tabstop>
   <tabstop>rb_RKF45</tabstop>
   <tabstop>editUncertainAbs</tabstop>
   <tabstop>editUncertainRel</tabstop>
@@ -2036,9 +2049,9 @@ cross sections</string>
  <connections/>
  <buttongroups>
   <buttongroup name="RadioG_Integration"/>
+  <buttongroup name="RadioG_Version"/>
   <buttongroup name="RadioG_Ionization"/>
   <buttongroup name="RadioG_ibin"/>
-  <buttongroup name="RadioG_Version"/>
   <buttongroup name="RadioG_Excitation"/>
  </buttongroups>
 </ui>

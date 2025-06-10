@@ -6,7 +6,6 @@
 //# include <fstream.h>
 //# include <iomanip.h>
 # include <math.h>
-# include <time.h>
 
 using namespace std;
 

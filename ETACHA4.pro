@@ -2,7 +2,9 @@ TARGET = ETACHA4
 TEMPLATE = app
 QT       += core gui printsupport charts
 CONFIG += c++17
-
+QMAKE_CXXFLAGS += -O2 -g
+QMAKE_CXXFLAGS += -pg
+QMAKE_LFLAGS   += -pg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 UI_DIR = ui
@@ -73,6 +75,8 @@ SOURCES += \
        g_Etacha4/win/e_winUtil.cpp \
     o_ODE/ode.cpp \
     o_ODE/ode_rkf_util.cpp \
+    o_ODE/r8_Euler.cpp \
+    o_ODE/r8_bdf.cpp \
     o_ODE/rkf45.cpp \
     w_Stuff/w_Label_clickable.cpp \
     w_Stuff/win_utilString.cpp
@@ -92,6 +96,8 @@ HEADERS  += \
        g_Etacha4/win/e_mainwindow.h \
        g_Etacha4/win/e_myextern.h \
 	o_ODE/ode.hpp \
+    o_ODE/r8_Euler.hpp \
+    o_ODE/r8_bdf.hpp \
 	o_ODE/rkf45.hpp \
 	w_Stuff/liseStrcpyOS.h \
 	w_Stuff/w_Label_clickable.h
@@ -109,11 +115,11 @@ RESOURCES += \
 RC_ICONS = g_Etacha4/Icons/etacha.ico
 
 # probably "macx" instead "mac"
-#mac {
-#DEFINES += __APPLE_
-#ICON = ./Icons_macos/etacha.icns
-#QMAKE_INFO_PLIST = ./Info.plist
-#installFolder.files = _install
-#installFolder.path = Contents
-#QMAKE_BUNDLE_DATA += installFolder
-#}
+mac {
+DEFINES += __APPLE_
+ICON = ./Icons_macos/etacha.icns
+QMAKE_INFO_PLIST = ./Info.plist
+installFolder.files = _install
+installFolder.path = Contents
+QMAKE_BUNDLE_DATA += installFolder
+}

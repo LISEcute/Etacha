@@ -7,13 +7,13 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QDebug>
-
 #include "../source/e_Etacha4.h"
 //#include "../win/e_mainwindow.h"
 #include "e_Declare.h"
 #include "e_AtomicShell.h"
 #include "w_Stuff/liseStrcpyOS.h"
-
+#include "o_ODE/r8_bdf.hpp"
+#include "o_ODE/r8_Euler.hpp"
 //----------------------------------------------  utils
 // extern double Velocity_au(double E);
 // extern double E_to_Beta(double E);
@@ -31,7 +31,6 @@ extern int DONAUT(QWidget *w);
 extern int f_num(int NCO);
 extern int f_numP(int NCO);
 extern int f_numPP(int NCO);
-
 
 extern void ode
 (
@@ -95,7 +94,6 @@ void CalcOlegSum(double *v);
 void NormOlegSum(double *V);
 double sumM[8];
 extern int ODEsteps;
-
 double QM, QF, dQF, currentThick;
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
@@ -109,6 +107,7 @@ connect(this, SIGNAL(updateStatusBar()), parent, SLOT(CM_updateStatusBar()));
 connect(this, SIGNAL(updateGraph()), parent, SLOT(CM_updateGraph()));
 
 };
+
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 void ETACHA::init()
 {
@@ -394,7 +393,7 @@ if(Zp>=50) {f59   = CreateEtaTxtFile(eta_filenames[en_f59], LinitialDir, LfileNa
 //c    *******************************************************
 
 //c    ******************************************************************
-//c    *** radiative and Auger "cross sections" (units 10e-20 cm²) ***
+//c    *** radiative and Auger "cross sections" (units 10e-20 cm?) ***
 
 //Oleg  because it was twice --->        PrintBindingEnergies(fSEff);
 
@@ -426,7 +425,7 @@ if(Zp>=50) {f59   = CreateEtaTxtFile(eta_filenames[en_f59], LinitialDir, LfileNa
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw  etacha cycle start
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw  etacha cycle start
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw  etacha cycle start
-      int MSTATE=1;
+     int MSTATE=1;
 
       double EPS=eRel;
       double EWT=eAbs;
@@ -491,11 +490,10 @@ L100:
                         //
 
 CalcOlegSum(Y);
-MSTATE=1;
+
 
 expectedT  = tout;
-if(DifEqModel==0)
-                {
+if(DifEqModel==0) {
                 //    * NEQN, the number of equations to be integrated;
                 //    * Y(1:NEQN), the vector of initial conditions;
                 //    * T, the starting point of integration;
@@ -508,9 +506,11 @@ if(DifEqModel==0)
                 //      impossible to continue the integration beyond TOUT.
                 //     The subroutine integrates from T to TOUT.
                 ode(F, NEQ, &Y[1], T, expectedT, EPS, EWT, MSTATE, WORK, IWORK);
-//                ode(F, NEQ, Y, T, tout, EPS, EWT, MSTATE, WORK, IWORK);
+
+
+
                 }
-else            {
+else if(DifEqModel == 1) {
                 //     Typically the subroutine is used to integrate from T to TOUT but it
                 //    can be used as a one-step integrator to advance the solution a
                 //    single step in the direction of TOUT.
@@ -548,6 +548,25 @@ else            {
                 //    the user must define a new TOUT and reset FLAG to -2 to continue
                 //    in the one-step integrator mode.
                 //
+
+                }
+else if(DifEqModel == 2){
+                    double h_sub = std::min(0.2, expectedT - T);
+                    T = integrate_euler(
+                        T,
+                        expectedT,
+                        &Y[1],
+                        NEQ,
+                        h_sub,
+                        EWT,
+                        EPS
+                        );
+                }
+else if(DifEqModel == 3) {
+                    double total   = expectedT - T;
+                    double h_sub   = std::min(0.1, total);
+                    // Capture the updated time from your BDF integrator:
+                    T = integrate_bdf1(T, expectedT, &Y[1], NEQ, h_sub);
 
                 }
 
@@ -985,7 +1004,7 @@ extern int f_KK(int I,int J,int num);
 
       yL=y2s+y2p;
 
-//.....mean values for 1s², 2s², 2p² (in case is needed) ......
+//.....mean values for 1s?, 2s?, 2p? (in case is needed) ......
       yKm  = 0.;
       yL1m = 0.;
       yL2m = 0.;
@@ -1159,7 +1178,7 @@ if(option <=5)
 else if(option==6)
         {
         fprintf(f,"\n"
-                "T (ug/cm2)  bare    1s     2s     2p    1s²    1s2s   1s2p  1s²2s  1s²2p   tot\n");
+                "T (ug/cm2)  bare    1s     2s     2p    1s?    1s2s   1s2p  1s?2s  1s?2p   tot\n");
         }
 else if(option==7)
         {
@@ -1287,7 +1306,7 @@ if(option <=5)
 else if(option==6)
       {
       fprintf(f,
-                "T (ug/cm2)  bare    1s     2s     2p    1s²    1s2s   1s2p  1s²2s  1s²2p   tot\n");
+                "T (ug/cm2)  bare    1s     2s     2p    1s?    1s2s   1s2p  1s?2s  1s?2p   tot\n");
       fputs(Star118,f);
       for(int n3=327; n3<=1284; n3++)
               if (Y[n3] >= 0.01)
