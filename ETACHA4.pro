@@ -47,7 +47,6 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 
 SOURCES += \
        L_Loss/L_Ziegler.cpp \
-    g_Etacha4/source/INTG_New.cpp \
        g_Etacha4/source/e_AtomicShell.cpp \
        g_Etacha4/source/e_Auger4.cpp \
        g_Etacha4/source/e_Donaut4.cpp \
@@ -84,7 +83,6 @@ SOURCES += \
     w_Stuff/win_utilString.cpp
 
 HEADERS  += \
-    g_Etacha4/source/INTG_New.h \
        g_Etacha4/source/e_AtomicShell.h \
        g_Etacha4/source/e_Declare.h \
        g_Etacha4/source/e_Etacha4.h \
