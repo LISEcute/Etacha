@@ -1,4 +1,4 @@
-#define ETACHAG_version "Version 4.5.2"
+#define ETACHAG_version "Version 4.5.5"
 #define ETACHAG_date    "04-APR-2025"
 
 
@@ -66,4 +66,10 @@
 // 4.5.1        04/25/25       ETACHA site haas been changed in About dialog
 // 4.5.2        04/25/25       the status bar shows ETACHA version at Wecome
 // 4.5.3        04/25/25       Ar0j1, Arj2
+
+// 4.5.4        06/04/25       Added Euler's intergrator for fast and quick integrations, added option on mainwindow
+
+// 4.5.5        08/04/25       Added Adams-Pece/Backwards Diferrentiation integrator with method and order switching
+//                             for solving stiff problems with ease(from Fortran version), added option on mainwindow
+
 
