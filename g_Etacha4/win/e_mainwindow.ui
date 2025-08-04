@@ -1603,16 +1603,9 @@ Calculations</string>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="r8_bdf">
+            <widget class="QRadioButton" name="rb_EQ">
              <property name="text">
-              <string>BDF Solver</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="rb_FI">
-             <property name="text">
-              <string>Gauss-Kronrod</string>
+              <string>EQDIF(StiffSolver)</string>
              </property>
             </widget>
            </item>
@@ -2048,10 +2041,10 @@ cross sections</string>
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="RadioG_Integration"/>
   <buttongroup name="RadioG_Version"/>
-  <buttongroup name="RadioG_Ionization"/>
   <buttongroup name="RadioG_ibin"/>
+  <buttongroup name="RadioG_Integration"/>
+  <buttongroup name="RadioG_Ionization"/>
   <buttongroup name="RadioG_Excitation"/>
  </buttongroups>
 </ui>

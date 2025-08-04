@@ -1,5 +1,4 @@
 #include "e_Etacha4.h"
-
 #include <QDateTime>
 #include <QtMath>
 #include <stdio.h>
@@ -7,13 +6,15 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QDebug>
+#include <vector>
+#include <algorithm>
 #include "../source/e_Etacha4.h"
 //#include "../win/e_mainwindow.h"
 #include "e_Declare.h"
 #include "e_AtomicShell.h"
 #include "w_Stuff/liseStrcpyOS.h"
-#include "o_ODE/r8_bdf.hpp"
 #include "o_ODE/r8_Euler.hpp"
+#include "o_ODE/LSODA.h"
 //----------------------------------------------  utils
 // extern double Velocity_au(double E);
 // extern double E_to_Beta(double E);
@@ -53,6 +54,20 @@ void f ( double t, double y[], double yp[] ), int neqn,
   double y[], double yp[], double *t, double tout, double *relerr,
   double abserr, int flag );
 
+extern void ode_cvode
+    (
+        void f ( double t, double y[], double yp[] ),
+        int neqn,
+        double y[],
+        double &t,
+        double tout,
+        double relerr,
+        double abserr,
+        int &iflag,
+        double work[],
+        int iwork[]
+        );
+
 
 //void EqDif(int N,double  T,double *Y,void (*F)(int,double,double *,double*),double TOUT,int &MSTATE,
 //                int NROOT,double EPS,double EWT,int MINT,
@@ -61,6 +76,10 @@ void f ( double t, double y[], double yp[] ), int neqn,
 //extern void F(int NEQ, double X, double *U,double *UP);
 extern void F(double X, double *U, double *UP);
 
+static void F_lsoda(double t, double *y, double *yp, void *)
+{
+    F(t, y, yp);
+}
 //------------------------------
 
 extern void SecMean(double *Y);
@@ -107,7 +126,6 @@ connect(this, SIGNAL(updateStatusBar()), parent, SLOT(CM_updateStatusBar()));
 connect(this, SIGNAL(updateGraph()), parent, SLOT(CM_updateGraph()));
 
 };
-
 //WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 void ETACHA::init()
 {
@@ -506,9 +524,6 @@ if(DifEqModel==0) {
                 //      impossible to continue the integration beyond TOUT.
                 //     The subroutine integrates from T to TOUT.
                 ode(F, NEQ, &Y[1], T, expectedT, EPS, EWT, MSTATE, WORK, IWORK);
-
-
-
                 }
 else if(DifEqModel == 1) {
                 //     Typically the subroutine is used to integrate from T to TOUT but it
@@ -562,13 +577,29 @@ else if(DifEqModel == 2){
                         EPS
                         );
                 }
-else if(DifEqModel == 3) {
-                    double total   = expectedT - T;
-                    double h_sub   = std::min(0.1, total);
-                    // Capture the updated time from your BDF integrator:
-                    T = integrate_bdf1(T, expectedT, &Y[1], NEQ, h_sub);
+else if (DifEqModel == 3) {
+                    static LSODA ls_solver;
+                    std::vector<double> yvec(NEQ);
+                    for (int i = 0; i < NEQ; ++i)
+                        yvec[i] = Y[i + 1];
 
+                    std::vector<double> yout;
+                    ls_solver.lsoda_update(
+                        F_lsoda,
+                        NEQ,
+                        yvec,
+                        yout,
+                        &T,
+                        expectedT,
+                        &MSTATE,
+                        nullptr,
+                        EPS,
+                        EWT);
+
+                    for (int i = 0; i < NEQ; ++i)
+                        Y[i + 1] = yout[i + 1];
                 }
+
 
 Ocounter++;
 if(DebugMode)

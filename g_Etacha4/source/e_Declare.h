@@ -142,7 +142,7 @@ const double Coef_Electron_Holes[35] = {1., // 0 - not used in C
 2.,6.,2.,6.,10.,32.,      //15-20
 2.,6.,10.,32.,2.,6.,10.,32.,32.,32.,32.,6.,6.,10.  // 21-34
 };
-                
+
 //c*********************************************************************
 //L202:    format(89('*'));
 const char *Star89 =
@@ -154,12 +154,12 @@ const char *Star118 =
 /*
 
 //c ....................................................................
-//L211:    format(1x,"(ug/cm²) ",10(3x,"(",i2,"+)  "));
-//L215:    format(1x,"(ug/cm²) ",10(3x,"(",i2,"+)  "));
+//L211:    format(1x,"(ug/cm?) ",10(3x,"(",i2,"+)  "));
+//L215:    format(1x,"(ug/cm?) ",10(3x,"(",i2,"+)  "));
 
-//L216:    format('T (ug/cm²)  bare    1s     2s     2p    1s²',
-            '    1s2s   1s2p  1s²2s  1s²2p   tot');
-//L217:    format('T (ug/cm²)  y1s       y2s      y2p      ym',
+//L216:    format('T (ug/cm?)  bare    1s     2s     2p    1s?',
+            '    1s2s   1s2p  1s?2s  1s?2p   tot');
+//L217:    format('T (ug/cm?)  y1s       y2s      y2p      ym',
             '      yn      Qm      Qm in   Qm out    PTOT');
 
 

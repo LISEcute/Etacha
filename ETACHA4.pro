@@ -5,13 +5,14 @@ CONFIG += c++17
 QMAKE_CXXFLAGS += -O2 -g
 QMAKE_CXXFLAGS += -pg
 QMAKE_LFLAGS   += -pg
+QMAKE_CXXFLAGS += -pthread
+QMAKE_LFLAGS   += -pthread
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+QT += concurrent
 UI_DIR = ui
 MOC_DIR = moc
 RCC_DIR = rcc
 OBJECTS_DIR = obj
-
 
 win32-g++ {
 DESTDIR = c:/Etacha/_install
@@ -25,8 +26,8 @@ else:VERSION = 4.4.18    # major.minor.patch
 
 win32 {
        QMAKE_TARGET_COPYRIGHT = "LISE group at FRIB/MSU"
-	QMAKE_TARGET_COMPANY   = "LISE group at FRIB/MSU"
-	}
+        QMAKE_TARGET_COMPANY   = "LISE group at FRIB/MSU"
+        }
 
 #==================================================
 # The following define makes your compiler warn you if you use any
@@ -46,6 +47,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 
 SOURCES += \
        L_Loss/L_Ziegler.cpp \
+    g_Etacha4/source/INTG_New.cpp \
        g_Etacha4/source/e_AtomicShell.cpp \
        g_Etacha4/source/e_Auger4.cpp \
        g_Etacha4/source/e_Donaut4.cpp \
@@ -74,14 +76,15 @@ SOURCES += \
        g_Etacha4/win/e_mainwindow.cpp \
        g_Etacha4/win/e_winUtil.cpp \
     o_ODE/ode.cpp \
+    o_ODE/LSODA.cpp \
     o_ODE/ode_rkf_util.cpp \
     o_ODE/r8_Euler.cpp \
-    o_ODE/r8_bdf.cpp \
     o_ODE/rkf45.cpp \
     w_Stuff/w_Label_clickable.cpp \
     w_Stuff/win_utilString.cpp
 
 HEADERS  += \
+    g_Etacha4/source/INTG_New.h \
        g_Etacha4/source/e_AtomicShell.h \
        g_Etacha4/source/e_Declare.h \
        g_Etacha4/source/e_Etacha4.h \
@@ -91,20 +94,20 @@ HEADERS  += \
        g_Etacha4/win/e_CSresults.h \
        g_Etacha4/win/e_Constant.h \
        g_Etacha4/win/e_ftype.h \
-	g_Etacha4/win/e_about.h \
+        g_Etacha4/win/e_about.h \
        g_Etacha4/win/e_graph.h \
        g_Etacha4/win/e_mainwindow.h \
        g_Etacha4/win/e_myextern.h \
-	o_ODE/ode.hpp \
+        o_ODE/ode.hpp \
     o_ODE/r8_Euler.hpp \
-    o_ODE/r8_bdf.hpp \
-	o_ODE/rkf45.hpp \
-	w_Stuff/liseStrcpyOS.h \
-	w_Stuff/w_Label_clickable.h
+    o_ODE/LSODA.h \
+        o_ODE/rkf45.hpp \
+        w_Stuff/liseStrcpyOS.h \
+        w_Stuff/w_Label_clickable.h
 
 FORMS    += \
        g_Etacha4/win/e_CSresults.ui \
-	g_Etacha4/win/e_about.ui \
+        g_Etacha4/win/e_about.ui \
        g_Etacha4/win/e_graph.ui \
        g_Etacha4/win/e_mainwindow.ui
 
@@ -115,7 +118,7 @@ RESOURCES += \
 RC_ICONS = g_Etacha4/Icons/etacha.ico
 
 # probably "macx" instead "mac"
-mac {
+QMAKE_MACOSX_DEPLOYMENT_TARGET {
 DEFINES += __APPLE_
 ICON = ./Icons_macos/etacha.icns
 QMAKE_INFO_PLIST = ./Info.plist
@@ -123,3 +126,5 @@ installFolder.files = _install
 installFolder.path = Contents
 QMAKE_BUNDLE_DATA += installFolder
 }
+
+LIBS += -llapack -lblas

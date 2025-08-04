@@ -190,8 +190,7 @@ MainWindow::MainWindow(QWidget *parent) :
   bg->addButton(ui->rb_ODE);
   bg->addButton(ui->rb_RKF45);
   bg->addButton(ui->rb_EM);
-  bg->addButton(ui->r8_bdf);
-  bg->addButton(ui->rb_FI);
+  bg->addButton(ui->rb_EQ);
   k=0;
   const QList<QAbstractButton *> buttons5 = bg->buttons();
   for (QAbstractButton *myButton : buttons5) bg->setId(myButton,k++);
@@ -199,8 +198,7 @@ MainWindow::MainWindow(QWidget *parent) :
           this, &MainWindow::bg_Integration_clicked);
 
   ui->rb_EM->setEnabled(true);
-  ui->r8_bdf->setEnabled(false);
-  ui->rb_FI->setEnabled(false);
+  ui->rb_EQ->setEnabled(true);
   //---------------------------------------------------------------------------
 
   cb_Show = ui->cb_ShowResults;

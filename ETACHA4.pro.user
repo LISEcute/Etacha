@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 12.0.2, 2025-06-09T03:43:57. -->
+<!-- Written by QtCreator 12.0.2, 2025-07-29T23:06:34. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -387,7 +387,7 @@
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
-      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Deploy to Arjun’s iPhone</value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Deploy to *unknown*</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.IosDeployStep</value>
      </valuemap>
      <value type="qlonglong" key="ProjectExplorer.BuildStepList.StepsCount">1</value>
