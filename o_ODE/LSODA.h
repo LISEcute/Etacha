@@ -122,7 +122,7 @@ private:
 
     int kflag, jstart;
 
-    size_t ixpr = 0, jtyp, mused, mxordn, mxords = 12;
+    size_t ixpr = 0, jtyp, mused, mxordn = 12, mxords = 5;
     size_t meth_;
 
     size_t n, nq, nst, nfe, nje, nqu;

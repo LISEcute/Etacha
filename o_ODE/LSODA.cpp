@@ -31,6 +31,7 @@
 #include <limits>
 using namespace std;
 
+extern int ODEsteps;
 constexpr real ETA = std::numeric_limits<real>::epsilon();
 
 LSODA::LSODA()
@@ -553,12 +554,12 @@ void LSODA::lsoda(LSODA_ODE_SYSTEM_TYPE f, const size_t neq, vector<real>& y,
         nyh = n;
         lenyh = 1 + max(mxordn, mxords);
 
-        yh_.resize(lenyh + 1, std::vector<real>(nyh + 1, 0.0));
-        wm_.resize(nyh + 1, std::vector<real>(nyh + 1, 0.0));
-        ewt.resize(1 + nyh, 0);
-        savf.resize(1 + nyh, 0);
-        acor.resize(nyh + 1, 0.0);
-        ipvt.resize(nyh + 1, 0);
+        yh_.assign(lenyh + 1, std::vector<real>(nyh + 1, 0.0));
+        wm_.assign(nyh + 1, std::vector<real>(nyh + 1, 0.0));
+        ewt.assign(1 + nyh, 0.0);
+        savf.assign(1 + nyh, 0.0);
+        acor.assign(nyh + 1, 0.0);
+        ipvt.assign(nyh + 1, 0);
     }
     /*
        Check rtol and atol for legality.
@@ -1093,7 +1094,7 @@ void LSODA::stoda(
         irflag = 0;
         pdest = 0.;
         pdlast = 0.;
-        ratio = 1.2;
+        ratio = 1.5;
         cfode(2);
         for (i = 1; i <= 5; i++)
             cm2[i] = tesco[i][2] * elco[i][i + 1];
@@ -2214,8 +2215,10 @@ void LSODA::lsoda_update(LSODA_ODE_SYSTEM_TYPE f, const size_t neq,
     // cout << "Debug : rtol " << rtol << ". atol " << atol << endl;
 
     itask = 1;
-    iopt = 0;
-    jt = 2;
+    iopt = 1;
+    jt = 5;
+    iworks[0] = ml;  // lower bandwidth
+    iworks[1] = mu;  // upper bandwidth
 
     yout.resize(neq + 1);
 
@@ -2232,4 +2235,5 @@ void LSODA::lsoda_update(LSODA_ODE_SYSTEM_TYPE f, const size_t neq,
 
     lsoda(
         f, neq, yout, t, tout, itask, istate, iopt, jt, iworks, rworks, _data);
+    ODEsteps = static_cast<int>(nst);
 }
